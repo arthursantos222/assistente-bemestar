@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import jsPDF from "jspdf";
 import "./App.css";
 
-
 function App() {
   const [formData, setFormData] = useState({
     nome: "",
@@ -15,6 +14,8 @@ function App() {
   const [relatorio, setRelatorio] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL; // <-- Variável de ambiente
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,8 +26,7 @@ function App() {
     setRelatorio("");
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/respostas", {
-
+      const response = await fetch(`${apiUrl}/api/respostas`, { // <-- usa a variável
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
